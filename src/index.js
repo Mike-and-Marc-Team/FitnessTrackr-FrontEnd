@@ -2,8 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './app';
-
-
+import Homepage from './components/homePage';
+import Errorpage from './components/errorPage';
+import Login from './components/login';
+import Routines from './components/routines';
 
 
 const router = createBrowserRouter([
@@ -14,7 +16,15 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true, // sets the Homepage to render when you load the app
-                element: <Homepage /> //Homepage has not been created yet
+                element: <Homepage />
+            },
+            {
+                path: "Login",
+                element: <Login />
+            },
+            {
+                path: "Routines",
+                element: <Routines />
             }
         ]
     }
