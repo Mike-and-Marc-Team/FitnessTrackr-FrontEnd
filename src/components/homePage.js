@@ -6,7 +6,7 @@ const Homepage = () => {
     return (
         <div>
             <div>
-                This will be the Homepage
+                <p style={pageStyling}>This will be the Homepage</p>
             </div>
         </div>
     )
@@ -15,3 +15,9 @@ const Homepage = () => {
 
 
 export default Homepage;
+
+
+const pageStyling = {
+    color: 'blue',
+    textAlign: 'center'
+}

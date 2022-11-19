@@ -5,6 +5,7 @@ import App from './app';
 import Homepage from './components/homePage';
 import Errorpage from './components/errorPage';
 import Login from './components/login';
+import Register from './components/register';
 import Routines from './components/routines';
 
 
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
             {
                 path: "Login",
                 element: <Login />
+            },
+            {
+                path: "Register",
+                element: <Register />
             },
             {
                 path: "Routines",

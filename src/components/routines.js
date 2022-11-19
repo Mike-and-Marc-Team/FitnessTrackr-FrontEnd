@@ -11,10 +11,16 @@ const Routines = () => {
         async function postHandler(event) {
             try {
                 const response = await fetch(
-                    'http://fitnesstrac-kr.herokuapp.com/api/routines'
+                    'http://fitnesstrac-kr.herokuapp.com/api/routines',
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        }
+                    }
                 );
                 const transData = await response.json();
-                setRoutines(transData.data.routines);
+                console.log(transData)
+                setRoutines(transData);
             } catch (error) {
                 console.log(error)
             }
@@ -24,14 +30,15 @@ const Routines = () => {
 
     return (
         <>
-            {routines && routines.length ? routines.map((event) => {
+            {routines && routines.length ? routines.map((routine, index) => {
                 return(
                     <div>
                         <div>
-                            <div>{event.creatorName.username}</div>
-                            <div>{event.name}</div>
-                            <div>{event.goal}</div>
-                            <div>{event.activities}</div>
+                            <div>{routine.creatorName}</div>
+                            
+                            <div>{routine.name}</div>
+                            <div>{routine.goal}</div>
+                            {/* <div>{routine.activities}</div> */}
                         </div>
                     </div>
                 )
