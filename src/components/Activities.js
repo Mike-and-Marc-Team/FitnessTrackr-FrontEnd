@@ -4,6 +4,29 @@ import { useOutletContext, Link } from "react-router-dom";
 const activitiesPage = () => {
     const activityData = useOutletContext()
 
+    const [activities, setActivities] = useState([])
+
+    useEffect(() => {
+        
+
+        async function fetchActivitiesData() {
+
+            try {
+
+                const response = await fetch(
+                    'http://fitnesstrac-kr.herokuapp.com/api/activities'
+                );
+                const data = await response.json();
+                // console.log(data.data)
+                // console.log(data.data.posts)
+                setActivities (data.data.posts)
+            } catch (error) {
+                console.error(err);
+            }
+        }
+        fetchActivitiesData();
+    }, [])
+
     return (
         <div id="activitiesPage">
             <p id="activitiesList">Check Out These Workouts!</p>

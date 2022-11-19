@@ -20,7 +20,7 @@ const createNewActivity = () => {
                 })
                 const data = await response.json()
                 console.log(data)
-                setNewActivity([...newActivity, data.data.post])
+                setNewActivity([...newActivity, data.data.activities])
 
                 navigate("/activities")
                 
