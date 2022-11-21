@@ -64,7 +64,6 @@ const router = createBrowserRouter([
                 path: "NewRoutine",
                 element: <NewRoutine />
             },
-            
         ]
     }
 ]);

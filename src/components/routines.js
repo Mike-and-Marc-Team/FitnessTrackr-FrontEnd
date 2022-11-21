@@ -7,7 +7,7 @@ const Routines = () => {
     const [routines, setRoutines] = useState([]);
  
     useEffect(() => {
-        async function postHandler(event) {
+        async function postHandler() {
             try {
                 const response = await fetch(
                     'http://fitnesstrac-kr.herokuapp.com/api/routines',
