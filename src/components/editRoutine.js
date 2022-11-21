@@ -27,7 +27,7 @@ const RoutineEdit = () => {
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          'Authorization': `Bearer ${localStorage.getItem("token")}`,
         },
         method: "PATCH",
         body: JSON.stringify({

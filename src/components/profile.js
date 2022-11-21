@@ -1,52 +1,75 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate} from "react-router-dom";
-import activitiesPage from "./Activities";
+
 
 const profilePage = () => {
     const [otherPosts, setOtherPosts] = useState([])
     const [yourPosts, setYourPosts] = useState([])
-    const navigate = useNavigate()
     const [filteredArr, setFilteredArr] = useState([])
+    const [personalProfile, setPersonalProfile] = useState({})
+    const [routine, setRoutine] = useState([])
+    const navigate = useNavigate()
 
     useEffect(() => {
 
         if (yourPosts.length) {
-            const newArr = yourPosts.filter((post) => activities.active)
+            const newArr = yourPosts.filter((name) => {
+                return name
+            })
             setFilteredArr(newArr)
         }
     },[yourPosts])
 
 
     useEffect(() => {
-        async function fetchProfileData() {
-            try {
-                if (!localStorage.getItem("token")) {
-                    navigate('/login')
+        if(localStorage.getItem("token")) {
+            async function fetchProfileData() {
+                try {
+                    if (!localStorage.getItem("token")) {
+                        navigate('/login')
     
-                }
-
-                const response = await fetch(
-                    `http://fitnesstrac-kr.herokuapp.com/api/users/me`, {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${localStorage.getItem("token")}` 
-                        },
                     }
-                );
+
+                    const response = await fetch(
+                        `http://fitnesstrac-kr.herokuapp.com/api/users/me`, {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${localStorage.getItem("token")}` 
+                            },
+                        }
+                    );
+                    const data = await response.json();
+                    console.log("this is the profile data: ", data)
+                    setPersonalProfile(data)
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+            fetchProfileData();
+        }
+    }, [])
+
+    useEffect(() => {
+        async function personalRoutines() {
+            try {
+                const response = await fetch(`http://fitnesstrac-kr.herokuapp.com/api/users/${personalProfile.username}/routines`, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
                 const data = await response.json();
-                console.log("this is the profile data: ", data)
                 setYourPosts(data)
             } catch (error) {
                 console.log(error)
             }
         }
-        fetchProfileData();
-    }, [])
+        if(personalProfile.username) {personalRoutines()}
+    }, [personalProfile]);
 
     async function deletePost(id) {
         console.log(id)
         try {
-            const response = await fetch(`http://fitnesstrac-kr.herokuapp.com/api/activities/${id}`, {
+            const response = await fetch(`http://fitnesstrac-kr.herokuapp.com/api/routines/${id}`, {
                 method: "DELETE",
                 headers: {
                     'Content-Type': 'application/json',
@@ -55,8 +78,11 @@ const profilePage = () => {
             })
             const data = await response.json()
             console.log(data)
-            setOtherPosts(otherPosts.filter((activities) => {
-                return activities._id != id
+            setOtherPosts(otherPosts.filter((routine) => {
+                return routine.id != id
+            }))
+            setYourPosts(yourPosts.filter((routine) => {
+                return routine.id != id
             }))
 
         } catch (error) {
@@ -74,14 +100,15 @@ const profilePage = () => {
             <div>
                 {
                     filteredArr.length ? filteredArr.map((routine, idx) => {
-                        return <div key={routine.id}>
-                            <p>{activities.name}</p>
+                        return <div key={idx}>
+                            <p>{routine.name}</p>
+                            <p>{routine.goal}</p>
                             <button onClick={(event) => {
                                 event.preventDefault();
-                                deletePost(activity._id);
-                            }}>Remove Activity</button>
-                            <Link to={`${routine.id}`}>{routine.name}</Link>
-                            <p>{routine.goal}</p>
+                                deletePost(routine.id)
+                            }}>Remove Routine</button>
+                            <Link to={`/editroutine/${routine.id}`}>Edit Routine</Link>
+                            
                             </div>
                     }) : <p>You have not posted anything!</p>
                 }
