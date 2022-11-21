@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useOutletContext, Link, useOutlet } from "react-router-dom";
-// maybe grid from material UI?
+import { useOutletContext, Link } from "react-router-dom";
+import { Divider } from '@mui/material';
  
 const Routines = () => {
     console.log("Routines should be displaying now...")
@@ -30,17 +30,16 @@ const Routines = () => {
     return (
         <>
         <div>
-        <p>Create A New Routine! </p>
-        <Link to="/login">Login</Link>
-        </div>
+        <p>Create A New Routine</p>
+        <Link to="/login">Login First!</Link>
+        </div><br/><br/>
             {routines && routines.length ? routines.map((routine, index) => {
                 return(
-                    <div>
-                        <div>
-                            
-                            <br />
-                            <p>{routine.creatorName}</p>
-                            
+                    <div style={{display: "flex", justifyContent: "center", paddingTop: '30px'}}>
+                        <div style={postStyle}>
+                            <h3>{routine.creatorName}</h3>
+                            <Divider style={{backgroundColor: "white", justifyContent: 'center'}} />
+                            <br/>
                             <p>{routine.name}</p>
                             <p>{routine.goal}</p>
                             {/* <div>{routine.activities}</div> */}
@@ -54,3 +53,11 @@ const Routines = () => {
  
 export default Routines;
  
+const postStyle = {
+    borderRadius: 20,
+    border: '3px solid #001A4D',
+    height: "fit-content",
+    width: "350px",
+    boxShadow: '1px 2px 9px black',
+    justifyContent: 'center'
+}

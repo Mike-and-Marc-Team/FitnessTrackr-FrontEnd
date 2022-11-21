@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate} from "react-router-dom";
-
+import { Button } from "@mui/material";
 
 const profilePage = () => {
     const [otherPosts, setOtherPosts] = useState([])
@@ -95,6 +95,31 @@ const profilePage = () => {
     }
 
     return (
+
+        <div style={{display: "flex", justifyContent: "center"}}>
+            <div style={profileStyle}>
+                <h2>Your profile:</h2>
+                <div>
+                    {
+                        filteredArr.length ? filteredArr.map((routine, idx) => {
+                            return <div key={routine.id}>
+                                <p>{activities.name}</p>
+                                <button onClick={(event) => {
+                                    event.preventDefault();
+                                    deletePost(activity._id);
+                                }}>Remove Activity</button>
+                                <Link to={`${routine.id}`}>{routine.name}</Link>
+                                <p>{routine.goal}</p>
+                                </div>
+                        }) : <p>You have not posted anything!</p>
+                    }
+                </div><br/><br/>
+                <Link to="/newActivity">Create New Activity</Link>
+                <br />
+                <Link to="/addRoutine">Create New Routine</Link>
+                <br /><br />
+                <Button variant="contained" onClick={logOut}>Log Out</Button>
+
         <div>
             <p>Your profile</p>
             <div>
@@ -112,14 +137,19 @@ const profilePage = () => {
                             </div>
                     }) : <p>You have not posted anything!</p>
                 }
+
             </div>
-            <Link to="/newActivity">Create New Activity</Link>
-            <br />
-            <Link to="/addRoutine">Create New Routine</Link>
-            <br />
-            <button onClick={logOut}>Log Out</button>
         </div>
     )
 }
 
 export default profilePage;
+
+const profileStyle = {
+    marginTop: "5%",
+    borderRadius: 20,
+    border: '3px solid #001A4D',
+    height: "250px",
+    width: "350px",
+    boxShadow: '1px 2px 9px black'
+}
