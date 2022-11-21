@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+ 
 const Register = () => {
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState("");
     const navigate = useNavigate();
-
+ 
     async function registerHandler(event){
         event.preventDefault();
         try {
@@ -23,14 +23,13 @@ const Register = () => {
             localStorage.setItem("token", data.token)
             console.log(data.token)
             console.log(data)
-
+ 
             navigate("/")
         } catch (error) {
             console.log(error)
         }
     }
-
-
+ 
     const changeUsername = (event) => {
         setUsername(event.target.value)
     }
@@ -50,5 +49,6 @@ const Register = () => {
         </div>
     )
 };
-
+ 
 export default Register;
+ 

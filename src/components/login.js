@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-
-
+import { Link, useNavigate } from 'react-router-dom';
+ 
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
-
-
+ 
     function handleUsernameChange(event) {
         console.log(event.target.value);
         setUsername(event.target.value);
@@ -16,8 +14,9 @@ const Login = () => {
         console.log(event.target.value);
         setPassword(event.target.value);
     }
-
-    async function setRegisterInfo() {
+ 
+    async function setRegisterInfo(event) {
+        event.preventDefault()
         try {
             const response = await fetch(
                 'http://fitnesstrac-kr.herokuapp.com/api/users/login',
@@ -25,19 +24,19 @@ const Login = () => {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
+                        
                     },
                     body: JSON.stringify({
-                        user: {
                             username: username,
-                            password: password,
-                        }
+                            password: password
+                        
                     })
                 }
             )
-            const data = response.json();
-            console.log("This was our request's returned promise: ", data);
-            localStorage.setItem("token", data.data.token);
-            navigate("./routines.js");
+            const data = await response.json();
+            console.log("This was our request's returned promise: ", data.token);
+            localStorage.setItem("token", data.token);
+            navigate("/Routines");
         } catch (error) {
             console.log(error)
         }
@@ -46,7 +45,7 @@ const Login = () => {
         <div>
             <h1>Login to your account</h1>
             <p>Placeholder</p>
-
+ 
             <form onSubmit={setRegisterInfo}>
                 <label>Username: </label>
                 <input
@@ -63,13 +62,16 @@ const Login = () => {
                     value={password}
                     onChange={handlePasswordChange}
                 ></input><br/>
-
+ 
                 <div>
                     <button type="submit" style={{borderRadius: 15, fontSize: 16}}>Login</button>
                 </div>
             </form>
+            {/* <button onClick={logOut}>Log Out</button>
+            <p> Don't have a login?</p>
+            <Link to="/register">Register Here!</Link> */}
         </div>
     )
 };
-
+ 
 export default Login;

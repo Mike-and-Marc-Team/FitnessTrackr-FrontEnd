@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useOutletContext, Link } from "react-router-dom";
 // maybe grid from material UI?
-
-
+ 
 const Routines = () => {
     console.log("Routines should be displaying now...")
     const [routines, setRoutines] = useState([]);
-
-
+ 
     useEffect(() => {
         async function postHandler(event) {
             try {
@@ -18,26 +17,32 @@ const Routines = () => {
                         }
                     }
                 );
-                const transData = await response.json();
-                console.log(transData)
-                setRoutines(transData);
+                const data = await response.json();
+                console.log(data)
+                setRoutines(data);
             } catch (error) {
                 console.log(error)
             }
         }
         postHandler();
     }, []);
-
+ 
     return (
         <>
+        <div>
+        <p>Create A New Routine! </p>
+        <Link to="/login">Login</Link>
+        </div>
             {routines && routines.length ? routines.map((routine, index) => {
                 return(
                     <div>
                         <div>
-                            <div>{routine.creatorName}</div>
                             
-                            <div>{routine.name}</div>
-                            <div>{routine.goal}</div>
+                            <br />
+                            <p>{routine.creatorName}</p>
+                            
+                            <p>{routine.name}</p>
+                            <p>{routine.goal}</p>
                             {/* <div>{routine.activities}</div> */}
                         </div>
                     </div>
@@ -46,6 +51,6 @@ const Routines = () => {
         </>
     )
 };
-
-
+ 
 export default Routines;
+ 
