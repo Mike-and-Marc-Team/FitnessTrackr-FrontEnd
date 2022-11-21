@@ -1,7 +1,8 @@
 import { useOutletContext, useParams, useNavigate } from "react-router-dom";
+import { useState } from 'react'
 
 const DeleteRoutine = ({routine}) => {
-  const [routines, setRoutines] = useOutletContext();
+  const [routines, setRoutines] = useState([]);
   const navigate = useNavigate();
   const {id} = useParams();
 

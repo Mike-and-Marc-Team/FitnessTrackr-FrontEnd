@@ -6,8 +6,8 @@ const NewRoutine = () => {
     const [name, setName] = useState("");
     const [goal, setGoal] = useState("");
     const [isPublic, setIsPublic] = useState(false);
-    const [routines, setRoutines] = useOutletContext();
-    const importOutlet = useOutletContext();
+    const [routines, setRoutines] = useState([]);
+    // const importOutlet = useOutletContext();
     const navigate = useNavigate();
  
     async function createNewRoutine (event) {

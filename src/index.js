@@ -12,6 +12,7 @@ import Profile from './components/profile';
 import EditActivity from './components/editActivity';
 import NewActivity from './components/NewActivity';
 import NewRoutine from './components/addRoutine';
+import EditRoutine from './components/editRoutine';
 
 
 const router = createBrowserRouter([
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
             {
                 path: "/addRoutine",
                 element: <NewRoutine />
+            },
+            {
+                path: "/editRoutine/:id",
+                element: <EditRoutine />
             }
         ]
     }

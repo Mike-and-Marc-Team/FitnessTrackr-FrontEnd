@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useOutletContext, Link } from "react-router-dom";
+import { useOutletContext, Link, useOutlet } from "react-router-dom";
 // maybe grid from material UI?
  
 const Routines = () => {
@@ -7,7 +7,7 @@ const Routines = () => {
     const [routines, setRoutines] = useState([]);
  
     useEffect(() => {
-        async function postHandler(event) {
+        async function postHandler() {
             try {
                 const response = await fetch(
                     'http://fitnesstrac-kr.herokuapp.com/api/routines',

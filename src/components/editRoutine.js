@@ -1,13 +1,14 @@
 import React, {useState} from 'react';
-import { useOutletContext, useParams} from 'react-router-dom';
+import { useNavigate, useOutletContext, useParams} from 'react-router-dom';
 import DeleteRoutine from './DeleteRoutine';
 
 const RoutineEdit = () => {
   const [name, setName] = useState("");
   const [goal, setGoal] = useState("");
   const [isPublic, setIsPublic] = useState(false);
-  const [routines, setRoutines] = useOutletContext();
+  const [routines, setRoutines] = useState([]);
   const {id} = useParams();
+  const navigate = useNavigate();
 
   // useEffect(() => {
   //   const filteredRoutines = routines.filter((singleRoutine) => {
@@ -38,6 +39,7 @@ const RoutineEdit = () => {
       const newData = await newResponse.json();
       console.log(newData)
       setRoutines(newData);
+      navigate('/routines');
     } catch (error) {
       console.log(error);
     }
