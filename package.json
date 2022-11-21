@@ -17,11 +17,24 @@
   "bugs": {
     "url": "https://github.com/Mike-and-Marc-Team/FitnessTrackr-FrontEnd/issues"
   },
-  "homepage": "https://github.com/Mike-and-Marc-Team/FitnessTrackr-FrontEnd#readme",
+  "homepage": "/",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router": "^6.4.3",
+    "react-router-dom": "^6.4.3",
     "react-scripts": "^5.0.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
