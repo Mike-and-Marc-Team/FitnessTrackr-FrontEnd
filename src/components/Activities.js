@@ -1,46 +1,50 @@
-import React, {useState, useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import { useOutletContext, Link } from "react-router-dom";
 
 const activitiesPage = () => {
-    const activityData = useOutletContext()
+    const [activity, setActivity] = useState([]);
 
-    const [activities, setActivities] = useState([])
-
-    useEffect(() => {
-        
-
-        async function fetchActivitiesData() {
-
+    useEffect(()=> {
+        async function getAllActivities () {
             try {
-
-                const response = await fetch(
-                    'http://fitnesstrac-kr.herokuapp.com/api/activities'
-                );
-                const data = await response.json();
-                // console.log(data.data)
-                // console.log(data.data.posts)
-                setActivities (data.data.posts)
+                const data = await fetch(`http://fitnesstrac-kr.herokuapp.com/api/activities`,
+                {
+                    headers : {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                const results = await data.json()
+                setActivity(results)
+                console.log(results)
             } catch (error) {
-                console.error(err);
+                console.error(error.detail)
             }
         }
-        fetchActivitiesData();
-    }, [])
+        getAllActivities()
+        }
+    
+    ,[])
+
+
 
     return (
         <div id="activitiesPage">
             <p id="activitiesList">Check Out These Workouts!</p>
+            <p>Create Your Own Activities!</p>
+            <Link to="/login">Login to Create an Activity!</Link>
 
             <div id="activities">
                 {
-                    activityData[0].map((indThing, idx) => {
-                        return <div id="indivActivityPost" key={idx}>
-                            <p>{indThing.title}</p>
-                            <Link to={`/activities/${indThing._id}`}>Check It Out!</Link>
+                    activity && activity.length ? activity.map(indThing => {
+
+                        return <div id="indivActivityPost" key={indThing.id}>
+                            <p>{indThing.name}</p>
+                            <p>{indThing.description}</p>
+                            {/* <Link to={`/activities/${indThing._id}`}>Check It Out!</Link> */}
                             
                         </div>
-                    })
-                }
+                        }): <p>No activities at this time!</p>
+                    }
             </div>
         </div>
     )

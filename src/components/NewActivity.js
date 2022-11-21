@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const createNewActivity = () => {
+const NewActivity = () => {
     const [newActivity, setNewActivity] = useState([])
     const [newActivityTitle, setNewActivityTitle] = useState([])
     const [newActivityDesc, setNewActivityDesc] = useState([])
@@ -11,8 +11,16 @@ const createNewActivity = () => {
         async function createNewActivityPosts(event) {
             event.preventDefault()
             try {
+                if (!localStorage.getItem("token")) {
+                    navigate('/login')
+                    return;
+                }
                 const response = await fetch(`http://fitnesstrac-kr.herokuapp.com/api/activities`, {
                     method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem("token")}`
+                    },
                     body: JSON.stringify({
                         name: newActivityTitle,
                         description: newActivityDesc
@@ -20,7 +28,7 @@ const createNewActivity = () => {
                 })
                 const data = await response.json()
                 console.log(data)
-                setNewActivity([...newActivity, data.data.activities])
+                setNewActivity([...newActivity, data.name])
 
                 navigate("/activities")
                 
@@ -41,7 +49,7 @@ const createNewActivity = () => {
 
         return (
             <form onSubmit={createNewActivityPosts}>
-                <label>Create a New newActivity!</label>
+                <label>Create a New Activity!</label>
                 <p>Title: 
                 <input type="text" value={newActivityTitle} onChange={updateTitle}></input>
                 <br /> </p>
@@ -55,4 +63,4 @@ const createNewActivity = () => {
     
 
 
-export default createNewActivity;
+export default NewActivity;

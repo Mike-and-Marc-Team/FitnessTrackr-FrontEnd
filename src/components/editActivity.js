@@ -1,24 +1,28 @@
 import React, { useState } from 'react';
-import { userNavigate, useOutletContext, useParams } from 'react-router-dom';
+import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 
-const editActivity = () => {
+const editActivity = (activity) => {
 
-    const [title, setTitle] = useState("");
+    const [name, setName] = useState("");
     const [activities, setActivities] = useOutletContext()
     const [profileData, setProfileData] = useState([])
     const { id } = useParams()
     const [desc, setEditDesc] = useState("")
 
-    const navigate = userNavigate();
+    const navigate = useNavigate();
 
     async function createEdit (event) {
         event.preventDefault();
         try {
-            const response = await fetch(`http://fitnesstrac-kr.herokuapp.com/api/activities/${id}`,{
+            const response = await fetch(`http://fitnesstrac-kr.herokuapp.com/api/activities/${id}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                },
                 method: "PATCH",
                 body: JSON.stringify({
                     post: {
-                        name: title,
+                        name: name,
                         description: desc,
                     }
                 })
@@ -29,8 +33,8 @@ const editActivity = () => {
             const translatedEditActivities = await editActivities.json();
 
 
-            setProfileData(translatedEditActivities.data.activities)
-            setActivities(translatedEditActivities.data.activities)
+            setProfileData(translatedEditActivities)
+            setActivities(translatedEditActivities)
             
 
             navigate("/profile")
@@ -39,8 +43,8 @@ const editActivity = () => {
         }
     }
 
-    function editTitle(event) {
-        setTitle(event.target.value)
+    function editName(event) {
+        setName(event.target.value)
     }
     function editDesc(event) {
         setEditDesc(event.target.value)
@@ -50,8 +54,8 @@ const editActivity = () => {
         <div id="editPage">
             <p id="title">Edit Page</p>
             <form onSubmit={createEdit}>
-                <label>Edit Title</label>
-                <input type="text" value={title} onChange={editTitle}></input>
+                <label>Edit Name</label>
+                <input type="text" value={name} onChange={editName}></input>
                 <br />
                 <label>Edit Description</label>
                 <input type="text" value={desc} onChange={editDesc}></input>
@@ -63,4 +67,4 @@ const editActivity = () => {
     )
 }
 
-export default editActivity
+export default editActivity;
