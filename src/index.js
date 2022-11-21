@@ -7,6 +7,11 @@ import Errorpage from './components/errorPage';
 import Login from './components/login';
 import Register from './components/register';
 import Routines from './components/routines';
+import Activities from './components/Activities';
+import Profile from './components/profile';
+import EditActivity from './components/editActivity';
+import NewActivity from './components/NewActivity';
+import NewRoutine from './components/addRoutine';
 
 
 const router = createBrowserRouter([
@@ -30,6 +35,26 @@ const router = createBrowserRouter([
             {
                 path: "Routines",
                 element: <Routines />
+            },
+            {
+                path: "/activities",
+                element: <Activities />
+            },
+            {
+                path: "/profile",
+                element: <Profile />
+            },
+            {
+                path: "/editActivity/:id",
+                element: <EditActivity />
+            },
+            {
+                path: "/newActivity",
+                element: <NewActivity />
+            },
+            {
+                path: "/addRoutine",
+                element: <NewRoutine />
             }
         ]
     }
