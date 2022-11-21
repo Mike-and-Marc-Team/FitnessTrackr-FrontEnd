@@ -12,6 +12,7 @@ import Profile from './components/profile';
 import EditActivity from './components/editActivity';
 import NewActivity from './components/NewActivity';
 import NewRoutine from './components/addRoutine';
+import ActivityDetails from './components/detailedActivities';
 
 
 const router = createBrowserRouter([
@@ -37,25 +38,33 @@ const router = createBrowserRouter([
                 element: <Routines />
             },
             {
-                path: "/activities",
-                element: <Activities />
+                path: "Activities",
+                element: <Activities />,
+                children: [
+                    {
+                        path: "/Activities/:Id",
+                        element: <EditActivity />
+                    },
+                    {
+                        path: "Activities/:id",
+                        element: <ActivityDetails />
+                    }
+                ]
             },
             {
                 path: "/profile",
                 element: <Profile />
             },
-            {
-                path: "/editActivity/:id",
-                element: <EditActivity />
-            },
+            
             {
                 path: "/newActivity",
                 element: <NewActivity />
             },
             {
-                path: "/addRoutine",
+                path: "NewRoutine",
                 element: <NewRoutine />
-            }
+            },
+            
         ]
     }
 ]);

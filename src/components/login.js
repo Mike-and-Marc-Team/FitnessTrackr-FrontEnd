@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Button, TextField, Divider } from '@mui/material';
+
  
 const Login = () => {
     const [username, setUsername] = useState("");
@@ -42,36 +44,48 @@ const Login = () => {
         }
     }
     return (
-        <div>
-            <h1>Login to your account</h1>
-            <p>Placeholder</p>
- 
-            <form onSubmit={setRegisterInfo}>
-                <label>Username: </label>
-                <input
-                    placeholder="Enter Username..."
-                    type="text"
-                    value={username}
-                    onChange={handleUsernameChange}
-                ></input>
+        <div style={{display: "flex", justifyContent: "center"}}>
+            <div style={formStyle}>
+                <h1>Login to your account</h1>
                 <br/>
-                <label>Password: </label>
-                <input
-                    placeholder="Enter Password..."
-                    type="text"
-                    value={password}
-                    onChange={handlePasswordChange}
-                ></input><br/>
- 
-                <div>
-                    <button type="submit" style={{borderRadius: 15, fontSize: 16}}>Login</button>
-                </div>
-            </form>
-            {/* <button onClick={logOut}>Log Out</button>
-            <p> Don't have a login?</p>
-            <Link to="/register">Register Here!</Link> */}
+                <form onSubmit={setRegisterInfo}>
+                    <label>Username:</label><br/>
+                    <TextField
+                        style={textField}
+                        placeholder="Enter Username..."
+                        type="text"
+                        value={username}
+                        onChange={handleUsernameChange}
+                    ></TextField>
+                    <br/><br/>
+                    <label>Password:</label><br/>
+                    <TextField
+                        style={textField}
+                        placeholder="Enter Password..."
+                        type="text"
+                        value={password}
+                        onChange={handlePasswordChange}
+                    ></TextField><br/><br/>
+                        <Button variant='contained' type="submit">Login</Button>
+                </form>
+                <p> Don't have a login? <Link to="Register">Register Here!</Link></p>
+            </div>
         </div>
     )
 };
  
 export default Login;
+
+const formStyle = {
+    marginTop: "5%",
+    borderRadius: 20,
+    border: '3px solid #001A4D',
+    height: "370px",
+    width: "350px",
+    boxShadow: '1px 2px 9px black'
+}
+
+const textField = {
+    borderRadius: 5,
+    backgroundColor: '#8a8a8a'
+}

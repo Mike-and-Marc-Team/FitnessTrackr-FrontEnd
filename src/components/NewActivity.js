@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button, TextField, Divider } from '@mui/material';
 
 const NewActivity = () => {
     const [newActivity, setNewActivity] = useState([])
@@ -48,19 +49,36 @@ const NewActivity = () => {
         
 
         return (
-            <form onSubmit={createNewActivityPosts}>
-                <label>Create a New Activity!</label>
-                <p>Title: 
-                <input type="text" value={newActivityTitle} onChange={updateTitle}></input>
-                <br /> </p>
-                <p>Description: 
-                <input type="text" value={newActivityDesc} onChange={updateDesc}></input>
-                <br /> </p>
-                <button type="Submit">Submit New Activity</button>
-            </form>
+            <div style={{display: "flex", justifyContent: "center"}}>
+                <div style={formStyle}>
+                    <form onSubmit={createNewActivityPosts}>
+                        <h2>Create a New Activity</h2><Divider style={{backgroundColor: 'white'}}/><br/>
+                        <label>Title:</label><br/>
+                        <TextField style={textField} placeholder='Enter Title...' type="text" value={newActivityTitle} onChange={updateTitle}></TextField><br/><br/>
+                        <label>Description:</label><br/>
+                        <TextField style={textField} placeholder='Enter Description...' type="text" value={newActivityDesc} onChange={updateDesc}></TextField>
+                        <br/><br/><br/>
+                        <Button variant='contained' type="Submit">Submit New Activity</Button>
+                    </form>
+                </div>
+            </div>
         )
 }
     
 
 
 export default NewActivity;
+
+const formStyle = {
+    marginTop: "5%",
+    borderRadius: 20,
+    border: '3px solid #001A4D',
+    height: "350px",
+    width: "350px",
+    boxShadow: '1px 2px 9px black'
+}
+
+const textField = {
+    borderRadius: 5,
+    backgroundColor: '#8a8a8a'
+}
